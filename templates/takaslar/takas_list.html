@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+    <h1>Takas Listesi</h1>
+    <br>
+    <table class="table table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">İlaç</th>
+                <th scope="col">Adet</th>
+                <th scope="col">Kalan</th>
+                <th scope="col">Miad</th>
+                <th scope="col">Takas Veren</th>
+                <th scope="col">Talep?</th>
+                <!-- <th scope="col">Eklenme</th> -->
+                <th scope="col">Düzenlenme</th>
+            </tr>
+        </thead>
+        {% for takas in object_list %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ takas }}</td>
+                <td>{{ takas.adet }}</td>
+                <td>{{ takas.kalan }}</td>
+                <td>{{ takas.miad }}</td>
+                <td>{{ takas.takas_veren.sirket_adi }}</td>
+                <td><a href="{% url 'takaslar:talep-ekle' takas.pk %}"><i class="material-icons" style="color:blue">shopping_cart</i></a></td>
+                <!-- <td>{{ takas.eklenme }}</td> -->
+                <td>{{ takas.duzenlenme }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+    <h1>Takaslarım</h1>
+    <br>
+    
+    <table class="table table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">İlaç</th>
+                <th scope="col">Adet</th>
+                <th scope="col">Kalan</th>
+                <th scope="col">Miad</th>
+                <th scope="col">Düzenle</th>
+                <th scope="col">Sil</th>
+                <!-- <th scope="col">Eklenme</th> -->
+                <!-- <th scope="col">Düzenlenme</th> -->
+                <th scope="col">Talep?</th>
+<!--                <th scope="col">Talep Adet</th>-->
+<!--                <th scope="col">Onay / Red</th>-->
+                <!-- <th scope="col">Onay Durumu</th> -->
+            </tr>
+        </thead>
+        {% for takas in object_list %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'takaslar:benim-takas-detay' takas.pk %}">{{ takas }}</a></td>
+                    <td>{{ takas.adet }}</td>
+                    <td>{{ takas.kalan }}</td>
+                    <td>{{ takas.miad }}</td>
+                    <td><a href="{% url 'takaslar:takas-guncelle' takas.pk %}"><i class="material-icons" style="color:green">reply</i></a></td>
+                    <td><a href="{% url 'takaslar:takas-sil' takas.pk %}"><i class="material-icons" style="color:red">remove_circle</i></a></td>
+                    <!-- <td>{{ takas.eklenme }}</td> -->
+                    <!-- <td>{{ takas.duzenlenme }}</td> -->
+
+    <!--                {% if takas.talep_set.exists %}-->
+    <!--                    <td>-->
+    <!--                        {% for talep in takas.talep_set.all %}-->
+    <!--                            <p>{{ talep.talep_eden }}</p>-->
+    <!--                        {% endfor %}-->
+    <!--                    </td>-->
+    <!--                    <td>-->
+    <!--                        {% for talep in takas.talep_set.all %}-->
+    <!--                            <p>{{ talep.adet }}</p>-->
+    <!--                        {% endfor %}-->
+    <!--                    </td>-->
+    <!--                    <td>-->
+    <!--                        {% for talep in takas.talep_set.all %}-->
+    <!--                            {% if talep.onay_set.exists %}-->
+    <!--                                {% for onay in talep.onay_set.all %}-->
+    <!--                                    &lt;!&ndash; <p><a href="{% url 'takaslar:onay-guncelle' onay.pk %}"><i class="material-icons" style="color:blue">reply</i></a></p> &ndash;&gt;-->
+    <!--                                    -->
+    <!--                                        {% if onay.onay == 'onaylandı' %}-->
+    <!--                                            <p style="color:green;">{{ onay }}</p> &lt;!&ndash; -{{ onay.pk }}</p> &ndash;&gt;-->
+    <!--                                        {% else %}-->
+    <!--                                            <p style="color:red">{{ onay }}</p> &lt;!&ndash; -{{ onay.pk }}</p> &ndash;&gt;-->
+    <!--                                        {% endif %}-->
+    <!--                                    -->
+    <!--                                {% endfor %}-->
+    <!--                            {% else %}-->
+    <!--                                <p><a href="{% url 'takaslar:onay-ekle' talep.pk %}"><i class="material-icons" style="color:blue">done_all</i></a></p>-->
+    <!--                            {% endif %}-->
+    <!--                        {% endfor %}-->
+    <!--                    </td>-->
+    <!--                {% else %}-->
+    <!--                    <td><hr></td>-->
+    <!--                {% endif %}-->
+
+
+                    {% for talep in takas.talep_set.all %}
+
+                            {% if not talep.onay_durum %}
+                                <td>|</td>
+                            {% endif %}
+
+                    {% endfor %}
+
+
+
+
+
+
+
+            </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

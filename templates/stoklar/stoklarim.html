@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+    <h1>Stoklarım</h1>
+    <br>
+    
+    <table class="table table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">İlaç</th>
+                <th scope="col">Adet</th>
+                <th scope="col">Kalan</th>
+                <th scope="col">Düzenle</th>
+                <th scope="col">Sil</th>
+                <!-- <th scope="col">Eklenme</th> -->
+                <!-- <th scope="col">Düzenlenme</th> -->
+                <th scope="col">Talep Eden</th>
+                <th scope="col">Talep Adet</th>
+                <th scope="col">Onay / Red</th>
+                <!-- <th scope="col">Onay Durumu</th> -->
+            </tr>
+        </thead>
+        {% for stok in object_list %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ stok }}</td>
+                <td>{{ stok.adet }}</td>
+                <td>{{ stok.kalan }}</td>
+                <td><a href="{% url 'stoklar:stok-guncelle' stok.pk %}"><i class="material-icons" style="color:green">reply</i></a></td>
+                <td><a href="{% url 'stoklar:stok-sil' stok.pk %}"><i class="material-icons" style="color:red">remove_circle</i></a></td>
+                <!-- <td>{{ takas.eklenme }}</td> -->
+                <!-- <td>{{ takas.duzenlenme }}</td> -->
+
+                {% if stok.sepet_set.exists %}
+                    <td>
+                        {% for sepet in stok.sepet_set.all %}
+                            <p>{{ sepet.eczane }}</p>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for sepet in stok.sepet_set.all %}
+                            <p>{{ sepet.adet }}</p>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for sepet in stok.sepet_set.all %}
+                            {% if sepet.stokonay_set.exists %}
+                                {% for onay in sepet.stokonay_set.all %}
+                                    <!-- <p><a href="{% url 'takaslar:onay-guncelle' onay.pk %}"><i class="material-icons" style="color:blue">reply</i></a></p> -->
+                                    
+                                        {% if onay.onay == 'onaylandı' %}
+                                            <p style="color:green;">{{ onay }}</p> <!-- -{{ onay.pk }}</p> -->
+                                        {% else %}
+                                            <p style="color:red">{{ onay }}</p> <!-- -{{ onay.pk }}</p> -->
+                                        {% endif %}
+                                    
+                                {% endfor %}
+                            {% else %}
+                                <p><a href="{% url 'stoklar:onay-ekle' sepet.pk %}"><i class="material-icons" style="color:blue">done_all</i></a></p>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                {% else %}
+                    <td><hr></td>
+                {% endif %}
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

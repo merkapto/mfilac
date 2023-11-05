@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+<!--    <h1>Takas Detay</h1>-->
+<!--    <hr>-->
+    <div class="card text-center">
+      <div class="card-header">
+          <h3><strong>{{ object }}</strong></h3>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Adet : {{ object.adet }}</h5>
+        <p class="card-text">Kalan : {{ object.kalan }}</p>
+<!--        <a href="#" class="btn btn-primary">Go somewhere</a>-->
+      </div>
+      <div class="card-footer text-muted">
+        {{ object.miad }}
+      </div>
+    </div>
+    <hr>
+<!--    <p>İlaç : {{ object }}</p>-->
+<!--    <p>Takas Adet : {{ object.adet }}</p>-->
+<!--    <p>Kalan : {{ object.kalan }}</p>-->
+<!--    <p>Miad : {{ object.miad }}</p>-->
+
+    <table class="table table-hover table-sm table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Talep Eden</th>
+                <th scope="col">Talep Adet</th>
+                <th scope="col">Onay Adet</th>
+                <th scope="col">Onay / Red</th>
+                <th scope="col">Zaman</th>
+<!--                <th scope="col">Sil</th>-->
+            </tr>
+        </thead>
+        <tbody>
+<!--            {% if object.talep_set.exists %}-->
+                {% for talep in object.talep_set.all %}
+                    <tr>
+                        <td>
+                                <p>{{ talep.talep_eden.sirket_adi }}</p>
+                        </td>
+                        <td>
+                                <p>{{ talep.adet }}</p>
+                        </td>
+
+                        {% if talep.onay_set.exists %}
+                                {% for onay in talep.onay_set.all %}
+                                    <td>
+                                        <p>{{ onay.adet }}</p>
+                                    </td>
+                                    <td>
+                                        <!-- <p><a href="{% url 'takaslar:onay-guncelle' onay.pk %}"><i class="material-icons" style="color:blue">reply</i></a></p> -->
+                                        {% if onay.onay == 'onaylandı' %}
+                                            <p style="color:green;">{{ onay }}</p>
+                                        {% else %}
+                                            <p style="color:red">{{ onay }}</p>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ onay.eklenme }}
+                                    </td>
+                                {% endfor %}
+                        {% else %}
+                                <td>-</td>
+                                <td>
+                                    <p><a href="{% url 'takaslar:onay-ekle' talep.pk %}"><i class="material-icons" style="color:blue">bekliyor</i></a></p>
+                                </td>
+                                <td>-</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+<!--            {% endif %}-->
+        </tbody>
+    </table>
+</div>
+{% endblock %}

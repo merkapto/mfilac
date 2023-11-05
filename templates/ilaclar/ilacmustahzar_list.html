@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    
+    <ul>
+        {% for mustahzar in ilacmustahzar_listesi %}    
+            <li>{{ mustahzar }}</li>
+        {% empty %}
+            <p>Daha sonra eklenecektir!..</p>
+        {% endfor %}            
+    </ul>
+
+{% endblock %}

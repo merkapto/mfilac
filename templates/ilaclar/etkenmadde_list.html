@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+    <h2>Etken Madde Listesi</h2>
+    <ul>
+        {% for etkenmadde in etkenmadde_listesi %}
+            <li>{{ etkenmadde }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

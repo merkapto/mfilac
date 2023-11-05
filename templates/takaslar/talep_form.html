@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+    <form action="" method="post">
+        {% csrf_token %}
+        <h1>Talep Et</h1>
+        {% include "takaslar/form.html" %}
+<!--        {{ form }}-->
+
+        <br>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </form>
+</div>
+{% endblock %}

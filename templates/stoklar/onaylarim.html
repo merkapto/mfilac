@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+    <h1>Onaylarım</h1>
+    <br>
+
+    <table class="table table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">İlaç</th>
+                <th scope="col">Takas Adet</th>
+                <th scope="col">Talep Eden</th>
+                <th scope="col">Talep Adet</th>
+                <th scope="col">Güncelle</th>
+                <th scope="col">Onay / Red</th>
+                <th scope="col">Onay Adet</th>
+            </tr>
+        </thead>
+
+        {% for onay in object_list %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ onay.sepet }}</td>
+                    <td>{{ onay.sepet.stok.adet }}</td>
+                    <td>{{ onay.sepet.eczane }}</td>
+                    <td>{{ onay.sepet.adet }}</td>
+                    <td><a href="{% url 'stoklar:onay-guncelle' onay.pk %}"><i class="material-icons" style="color:blue">send</i></a></td>
+                    <td>
+                        {% if onay.onay == 'onaylandı' %}
+                            <p style="color:green">{{ onay }}</p> <!-- -{{ onay.pk }}</p> -->
+                        {% else %}
+                            <p style="color:red">{{ onay }}</p><!-- -{{ onay.pk }}</p> -->
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if onay.onay == 'onaylandı' %}
+                            <p style="color:green">{{ onay.adet }}</p>
+                        {% else %}
+                            <p style="color:red">{{ onay.adet }}</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

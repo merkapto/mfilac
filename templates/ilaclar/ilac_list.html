@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+    <h2>İlaç Listesi</h2>
+    <ul>
+        {% for ilac in ilac_listesi %}
+            <li>{{ ilac }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

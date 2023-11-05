@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Mustahzar Listesi</h2>
+    <ul>
+        {% for mustahzar in mustahzar_listesi %}
+            <li>{{ mustahzar }}
+                <!-- {% for edb in mustahzar.etkendozbirim_set.all %}
+                    {{ edb }}
+                {% endfor %}  -->
+            </li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}

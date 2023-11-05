@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+    <h1>Taleplerim</h1>
+    <br>
+    <table class="table table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">İlaç</th>
+                <th scope="col">Talep Adet</th>
+                <th scope="col">Miad</th>
+                <th scope="col">Takas Veren</th>
+                <th scope="col">Düzenle</th>
+                <th scope="col">Sil</th>
+                <th scope="col">Onay Durumu</th>
+                <th scope="col">Onay Adet</th>
+                <!-- <th scope="col">Eklenme</th>
+                <th scope="col">Düzenlenme</th> -->
+            </tr>
+        </thead>
+        {% for talep in object_list %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ talep }}</td>
+                <td>{{ talep.adet }}</td>
+                <td>{{ talep.takas.miad }}</td>
+                <td>{{ talep.takas.takas_veren }}</td>
+                <td><a href="{% url 'takaslar:talep-guncelle' talep.pk %}"><i class="material-icons" style="color:green">refresh</i></a></td>
+                <td><a href="{% url 'takaslar:talep-sil' talep.pk %}"><i class="material-icons" style="color:red">cancel</i></a></td>
+                
+                {% for onay in talep.onay_set.all %}
+                    {% if onay.onay == 'onaylandı' %}
+                        <td style="color:green">{{ onay }}</td>
+                        <td>{{ onay.adet }}</td>
+                    {% elif onay.onay == 'reddedildi' %}
+                        <td style="color:red">{{ onay }}</td>
+                        <td>{{ onay.adet }}</td>
+                    {% else %}
+                        <td style="color:blue">{{ onay }}</td>
+                        <td>{{ onay.adet }}</td>
+                    {% endif %}
+                {% endfor %}
+                
+                <!-- <td>{{ takas.eklenme }}</td>
+                <td>{{ takas.duzenlenme }}</td> -->
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

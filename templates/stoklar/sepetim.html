@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+
+    <h1>Sepetim</h1>
+    <br>
+    <table class="table table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">İlaç</th>
+                <th scope="col">Adet</th>
+                <th scope="col">Depo</th>
+                <th scope="col">Düzenle</th>
+                <th scope="col">Sil</th>
+                <th scope="col">Onay Durumu</th>
+                <th scope="col">Onay Adet</th>
+                <!-- <th scope="col">Eklenme</th>
+                <th scope="col">Düzenlenme</th> -->
+            </tr>
+        </thead>
+        {% for sepet in object_list %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ sepet }}</td>
+                <td>{{ sepet.adet }}</td>
+                <td>{{ sepet.stok.depo }}</td>
+                <td><a href="{% url 'stoklar:sepet-guncelle' sepet.pk %}"><i class="material-icons" style="color:green">refresh</i></a></td>
+                <td><a href="{% url 'stoklar:sepet-sil' sepet.pk %}"><i class="material-icons" style="color:red">cancel</i></a></td>
+                
+                {% for onay in sepet.stokonay_set.all %}
+                    {% if onay.onay == 'onaylandı' %}
+                        <td style="color:green">{{ onay }}</td>
+                        <td>{{ onay.adet }}</td>
+                    {% elif onay.onay == 'reddedildi' %}
+                        <td style="color:red">{{ onay }}</td>
+                        <td>{{ onay.adet }}</td>
+                    {% else %}
+                        <td style="color:blue">{{ onay }}</td>
+                        <td>{{ onay.adet }}</td>
+                    {% endif %}
+                {% endfor %}
+                
+                <!-- <td>{{ takas.eklenme }}</td>
+                <td>{{ takas.duzenlenme }}</td> -->
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
